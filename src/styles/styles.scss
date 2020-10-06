@@ -1,0 +1,48 @@
+// menu
+.menu{
+    width: 300px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+.profile{
+    text-align: center;
+    padding: 15px 0px;
+    &-avatar{
+        img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    }
+    }
+    &-name{
+        padding-top: 15px;
+        color: #fff;
+    }
+}
+// end-menu
+
+// admin-content
+.admin{
+    margin-left: 300px;
+    padding: 15px 30px;
+    width: calc(100% - 300px);
+    &-header{
+        margin-top: 30px;
+        margin-bottom: 30px;
+        &_search{
+            height: 40px;
+            width: 45%;
+           button, input{
+                height: 40px;
+            }
+        }
+        &_newemployee{
+            height: 40px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+    }
+    
+}
