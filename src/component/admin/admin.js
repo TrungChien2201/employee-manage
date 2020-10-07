@@ -1,12 +1,10 @@
 import { DeleteOutlined, EditOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Button, Divider, Table } from 'antd';
+import { Button, Table } from 'antd';
 import Search from 'antd/lib/input/Search';
-
-import Column from 'antd/lib/table/Column';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addData, deleData, getdata } from '../../redux/action/admin';
+import { addData, deleData, editData, getdata, searchData } from '../../redux/action/admin';
 import ModalAddEmployee from '../modal';
 import ModalEditData from '../modalEdit';
 
@@ -16,6 +14,7 @@ export const Admin = () => {
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [dataEdit, setDataEdit] = useState();
   const dispatch = useDispatch();
+
   const DeleteItem = (itemData) => {
     console.log(itemData);
     dispatch(deleData(itemData.id))
@@ -74,7 +73,7 @@ export const Admin = () => {
       title: '',
       dataIndex: 'action',
       render: (text, record, index) => <div>
-        <Button onClick={() => DeleteItem(record)} shape="circle" type="button" ><DeleteOutlined /></Button>
+        <Button className="btn-delete" onClick={() => DeleteItem(record)} shape="circle" type="button" ><DeleteOutlined /></Button>
         <Button onClick={() => OpenModalEdit(record)} className="ml-2" shape="circle" ><EditOutlined /></Button>
       </div>
     },
@@ -85,6 +84,7 @@ export const Admin = () => {
     dispatch(getdata())
   }, []);
   const data = useSelector(state => state.getdataReducer.lists);
+  console.log(data);
   const showModal = () => {
     setIsModal(true)
   };
@@ -98,12 +98,23 @@ export const Admin = () => {
   };
   const AddEmployee = (dataNew) => {
     dispatch(addData(dataNew))
-    if (data) {
-      handleCancel();
-    }
-    else {
-      return;
-    }
+
+    handleCancel();
+
+  }
+  const EditEmployee = (data, id) => {
+    console.log(data);
+    dispatch(editData(data, id))
+  }
+
+  const handleSearch = (e) => {
+    console.log(e);
+    //  const filterData = data.filter(el=> el.employeecode === e)
+    //  console.log(filterData);
+    dispatch(searchData(e))
+  }
+  const ClearSearch =() => {
+    dispatch(getdata())
   }
   return (
     <>
@@ -111,17 +122,20 @@ export const Admin = () => {
         <div className="admin">
           <h2 className="admin-title">Wellcome Admin {user.nickname}</h2>
           <div className="d-flex justify-content-between admin-header">
-            <Search className="admin-header_search" placeholder="input search text" onSearch={value => console.log(value)} enterButton />
+            <div className="admin-header-left">
+              <Search className="admin-header_search" placeholder="input search text" onSearch={(e) => handleSearch(e)} enterButton />
+              <Button onClick={ClearSearch} className="admin-header_newemployee ml-3">Reset</Button>
+            </div>
             <Button className="admin-header_newemployee" onClick={showModal} type="primary"><UserAddOutlined /> New Employee</Button>
-            <ModalAddEmployee AddEmployee={AddEmployee} isModal={isModal} handleOk={handleOk} handleCancel={handleCancel} />
+            {isModal === true ? <ModalAddEmployee AddEmployee={AddEmployee} isModal={isModal} handleOk={handleOk} handleCancel={handleCancel} /> : ''}
           </div>
           <div className="mt-4">
             <Table columns={columns} dataSource={data} size="middle" />
           </div>
-          <ModalEditData data={dataEdit} isModalEdit={isModalEdit} CanCleModalEdit={CanCleModalEdit} handleOK={handleOK} />
+          {isModalEdit === true ? <ModalEditData data={dataEdit} isModalEdit={isModalEdit} CanCleModalEdit={CanCleModalEdit} handleOK={handleOK} EditEmployee={EditEmployee} /> : ''}
         </div>
       ) : ('')}
     </>
   )
 }
-export default Admin;
+export default React.memo(Admin);

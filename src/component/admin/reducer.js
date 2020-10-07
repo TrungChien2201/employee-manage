@@ -11,14 +11,19 @@ const getdataReducer = (state = list,action) => {
         case ActionType.GET_DATA_SUCCESS:{
             return {...state, lists: action.payload.map((el, index) => ({...el, key: index}))}
         }  
-        case ActionType.GET_DATA_SUCCESS:{
+        case ActionType.GET_DATA_ERROR:{
             return {...state}
         }     
         case ActionType.ADD_DATA:{
+            console.log(action.payload);
             return {...state}
         }
         case ActionType.ADD_DATA_SUCCESS:{
-            return {...state}
+            const newList = [...state.lists];
+           
+            newList.push(action.payload);
+            
+            return {...state, lists: newList}
         }
         case ActionType.ADD_DATA_ERROR:{
             return {...state}
@@ -27,10 +32,29 @@ const getdataReducer = (state = list,action) => {
             return {...state}
         }
         case ActionType.DELETE_DATA_SUCCESS:{
-            return {...state}
+            return {...state,lists: state.lists.filter(item=>item.id !== action.payload.id)}
         }
         case ActionType.DELETE_DATA_ERROR:{
             return {...state}
+        }
+        case ActionType.EDIT_DATA:{
+            return {...state}
+        }
+        case ActionType.EDIT_DATA_SUCCESS:{
+            console.log(action.payload);
+            return {...state,lists: state.lists.map((item,index)=>{
+                if(item.id === action.payload.id){
+                    return {...action.payload,key: index}
+                }
+                return item;
+            })}
+        }
+        case ActionType.EDIT_DATA_ERROR:{
+            return {...state}
+        }
+        case ActionType.SEARCH_DATA:{
+            console.log(action.payload);
+            return {...state,lists: state.lists.filter((item,index)=>item.employeecode === action.payload)}
         }
         default:
             return {...state}

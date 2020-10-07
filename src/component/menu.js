@@ -1,5 +1,5 @@
 import { Image, Menu } from 'antd';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import Login from './login';
 import { useAuth0 } from '@auth0/auth0-react';

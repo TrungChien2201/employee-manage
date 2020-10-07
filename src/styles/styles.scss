@@ -31,11 +31,17 @@
     &-header{
         margin-top: 30px;
         margin-bottom: 30px;
+        &-left{
+            width: 80%;
+            display: flex;
+        }
         &_search{
             height: 40px;
             width: 45%;
-           button, input{
+            button, input{
                 height: 40px;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
             }
         }
         &_newemployee{
@@ -45,4 +51,9 @@
         }
     }
     
+}
+.btn-delete{
+    span{
+        color: red;
+    }
 }

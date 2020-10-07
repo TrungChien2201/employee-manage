@@ -1,14 +1,12 @@
 import { Modal } from 'antd';
 import { Form, Input, InputNumber, Button } from 'antd';
-import React, { useEffect, useState } from 'react';
-
-
+import React, { useEffect, useRef, useState } from 'react';
 const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 16 },
 };
 
-const validateMessages = {
+let validateMessages = {
     required: '${label} is required!',
     types: {
         date: '${label} is not validate date!',
@@ -18,39 +16,29 @@ const validateMessages = {
         range: '${label} must be between ${min} and ${max}',
     },
 };
-const ModalEditData = ({ data, isModalEdit, handleOK, CanCleModalEdit }) => {
+const ModalEditData = ({ data, isModalEdit, handleOK, CanCleModalEdit, EditEmployee }) => {
     const [form] = Form.useForm();
-    console.log('====================================');
-    console.log(form);
-    console.log('====================================');
+    const formRef = useRef(null);
     const onFinish = user => {
-        debugger;
-        console.log(user.user);
-
+        EditEmployee(user.user,data.id)
     };
-    const [dataEdit,setDataEdit] = useState(data);
-    React.useEffect(()=>{
-          setDataEdit(data);
-          debugger
-          form.setFieldsValue({
-              user: data
-          });
-    },[data])
-      
-    
+    const [dataEdit, setDataEdit] = useState(data);
+    useEffect(() => {
+        setDataEdit(data)
+        form.setFieldsValue({ user: data })
+    }, [data])
     return (
         <>
             {dataEdit ? (
                 <Modal
-                    title="Add Employee"
+                    title="Edit Employee"
                     visible={isModalEdit}
                     onOk={handleOK}
                     onCancel={CanCleModalEdit}
                     width={1000}
                 >
-
-                    <Form form={form} value={data} {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
-                        <Form.Item  name={['user', 'employeecode']} label="Employee Code" rules={[{ required: true }]}>
+                    <Form form={form} ref={formRef} value={data} {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+                        <Form.Item name={['user', 'employeecode']} label="Employee Code" rules={[{ required: true }]}>
                             <Input />
                         </Form.Item>
                         <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}>

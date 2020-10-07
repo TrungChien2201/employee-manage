@@ -1,7 +1,7 @@
 import { Modal } from 'antd';
 import { Form, Input, InputNumber, Button } from 'antd';
-import React from 'react';
-
+import React, { useRef } from 'react';
+import { FormInstance } from 'antd/lib/form';
 
 const layout = {
     labelCol: { span: 4 },
@@ -19,10 +19,14 @@ const validateMessages = {
     },
 };
 const ModalAddEmployee = ({ isModal, handleOk, handleCancel ,AddEmployee}) => {
-   
+    const formRef = useRef(null);
+ 
     const onFinish = user => {
         console.log(user.user);
-        AddEmployee(user.user)
+        AddEmployee(user.user);
+        if (formRef.current) {
+            formRef.current.resetFields()
+        }
     };
     return (
         <Modal
@@ -32,7 +36,7 @@ const ModalAddEmployee = ({ isModal, handleOk, handleCancel ,AddEmployee}) => {
             onCancel={handleCancel}
             width={1000}
         >
-            <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+            <Form  {...layout}  ref={formRef} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
             <Form.Item name={['user', 'employeecode']} label="Employee Code" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
