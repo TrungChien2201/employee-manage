@@ -2,7 +2,6 @@ import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined, UserAddOutline
 import { useAuth0 } from '@auth0/auth0-react';
 import { Button, Table } from 'antd';
 import Search from 'antd/lib/input/Search';
-import Modal from 'antd/lib/modal/Modal';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { addData, deleData, editData, getdata, searchData } from '../../redux/action/admin';
@@ -10,7 +9,8 @@ import ModalAddEmployee from '../modal';
 import ModalEditData from '../modalEdit';
 import { Popconfirm, message } from 'antd';
 import Fuse from 'fuse.js';
-
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 export const Admin = () => {
   const { user, isAuthenticated } = useAuth0();
   console.log(isAuthenticated);
@@ -115,13 +115,15 @@ console.log(dataEmployee);
     setIsModal(false)
   };
   const AddEmployee = (dataNew) => {
-    dispatch(addData(dataNew))
-
+    dispatch(addData(dataNew));
     handleCancel();
+    toast.success('Add employee success');
+    
 
   }
   const EditEmployee = (data, id) => {
     dispatch(editData(data, id))
+    toast.success('Edit employee success');
   }
   
   const handleOnchange = (e) => {
@@ -163,6 +165,7 @@ console.log(dataEmployee);
               <Button onClick={ClearSearch} className="admin-header_newemployee ml-3">Reset</Button>
             </div>
             <Button className="admin-header_newemployee" onClick={showModal} type="primary"><UserAddOutlined /> New Employee</Button>
+            <ToastContainer />
             {isModal === true ? <ModalAddEmployee AddEmployee={AddEmployee} isModal={isModal} handleOk={handleOk} handleCancel={handleCancel} /> : ''}
           </div>
           <div className="mt-4">
