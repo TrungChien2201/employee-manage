@@ -18,7 +18,6 @@ function* SagaGetdata(){
 }
  
 function* SagaAddData(data){
-    console.log('add data',data.payload);
     try {
         const requestAdd = yield fetch(`https://5f7c24f500bd74001690a4b7.mockapi.io/api/v1/users`,{
             method: 'POST',
@@ -29,14 +28,12 @@ function* SagaAddData(data){
             body: JSON.stringify(data.payload)
         })
         const responeAdd = yield requestAdd.json();
-        console.log(responeAdd);
         yield put (addDataSuccess(responeAdd));
     } catch (error) {
         
     }
 }
 function * SagaDeleteData(id){
-    console.log(id.payload);
     try {
         const requestDelete = yield fetch(`https://5f7c24f500bd74001690a4b7.mockapi.io/api/v1/users/${id.payload}`,{
             method: 'DELETE',
@@ -55,7 +52,6 @@ function * SagaDeleteData(id){
 }
 
 function* SagaEditData(data){
-    console.log(data.payload.id);
     if (data)
     try {
         const requestEdit = yield fetch(`https://5f7c24f500bd74001690a4b7.mockapi.io/api/v1/users/${data.payload.id}`,{
@@ -68,7 +64,6 @@ function* SagaEditData(data){
             body: JSON.stringify(data.payload.list)
         })
         const responeEdit = yield requestEdit.json();
-        console.log(responeEdit);
         yield put (editDataSuccess(responeEdit));
     } catch (error) {
         console.log(error);
