@@ -1,5 +1,5 @@
 import { put, takeLatest } from "redux-saga/effects";
-import { ActionType, addDataSuccess, deleDataSuccess, editData, editDataSuccess, getdata, getdatasuccess } from "../../redux/action/admin";
+import { ActionType, addDataSuccess, deleDataSuccess, editDataSuccess, getdatasuccess } from "../../redux/action/admin";
 function* SagaGetdata(){
     try {
         const requestGet = yield fetch(`https://5f7c24f500bd74001690a4b7.mockapi.io/api/v1/users`,{
@@ -30,7 +30,7 @@ function* SagaAddData(data){
         const responeAdd = yield requestAdd.json();
         yield put (addDataSuccess(responeAdd));
     } catch (error) {
-        
+        console.log(error);
     }
 }
 function * SagaDeleteData(id){
@@ -44,7 +44,6 @@ function * SagaDeleteData(id){
             })
         })
         const responeDelete = yield requestDelete.json();
-        console.log(responeDelete);
         yield put (deleDataSuccess(responeDelete));
     } catch (error) {
         console.log(error);

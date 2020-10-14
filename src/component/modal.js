@@ -1,7 +1,7 @@
 import { Divider, Modal } from 'antd';
 import { Form, Input, InputNumber, Button } from 'antd';
 import React, { useRef } from 'react';
-import { FormInstance } from 'antd/lib/form';
+
 
 const layout = {
     labelCol: { span: 4 },
@@ -9,13 +9,13 @@ const layout = {
 };
 
 const validateMessages = {
-    required: '${label} is required!',
+    required: 'Value is not null',
     types: {
-        'date': '${label} is not validate date!',
-        'number': '${label} is not a validate number!',
+        'date': 'Value is not validate date!',
+        'number': 'Value is not a validate number!',
     },
     number: {
-        'range': '${label} must be between ${min} and ${max}',
+        'range': 'Value must be between 0 and 1000000000',
     },
 };
 const ModalAddEmployee = ({ isModal, handleOk, handleCancel ,AddEmployee}) => {

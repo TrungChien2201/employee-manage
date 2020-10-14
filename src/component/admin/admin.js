@@ -1,10 +1,10 @@
-import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined, UserAddOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Button, Table } from 'antd';
 import Search from 'antd/lib/input/Search';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addData, deleData, editData, getdata, searchData } from '../../redux/action/admin';
+import { addData, deleData, editData, getdata } from '../../redux/action/admin';
 import ModalAddEmployee from '../modal';
 import ModalEditData from '../modalEdit';
 import { Popconfirm, message } from 'antd';
@@ -13,7 +13,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 export const Admin = () => {
   const { user, isAuthenticated } = useAuth0();
-  console.log(isAuthenticated);
   const [isModal, setIsModal] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [dataEdit, setDataEdit] = useState();
@@ -93,7 +92,7 @@ export const Admin = () => {
       dispatch(getdata())
     }
     else return;
-  }, [isAuthenticated]);
+  }, [isAuthenticated,dispatch]);
   
   useEffect(()=> {
      setDataEmployee(data)
@@ -102,7 +101,6 @@ export const Admin = () => {
   useEffect(()=> {
     setDataSearch(datasearch)
  },[datasearch])
-  console.log(dataSearch);
   const showModal = () => {
     setIsModal(true)
   };
@@ -110,7 +108,6 @@ export const Admin = () => {
   const handleOk = e => {
     setIsModal(false)
   };
-console.log(dataEmployee);
   const handleCancel = e => {
     setIsModal(false)
   };
@@ -133,8 +130,7 @@ console.log(dataEmployee);
     
   }
   const handleSearch = (e) => {
-    //  const filterData = data.filter(el=> el.employeecode === e)
-    //  console.log(filterData);
+    
     const options = {
       includeScore: true,
       // equivalent to `keys: [['author', 'tags', 'value']]`
@@ -148,7 +144,6 @@ console.log(dataEmployee);
     listResult.push(result.map(el=>el.item));
    
     setDataEmployee(listResult[0])
-    console.log(listResult[0]);
   
   }
   const ClearSearch = () => {

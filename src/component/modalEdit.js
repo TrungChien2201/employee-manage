@@ -6,14 +6,14 @@ const layout = {
     wrapperCol: { span: 16 },
 };
 
-let validateMessages = {
-    required: '${label} is required!',
+const validateMessages = {
+    required: 'Value is not null',
     types: {
-        date: '${label} is not validate date!',
-        number: '${label} is not a validate number!',
+        'date': 'Value is not validate date!',
+        'number': 'Value is not a validate number!',
     },
     number: {
-        range: '${label} must be between ${min} and ${max}',
+        'range': 'Value must be between 0 and 1000000000',
     },
 };
 const ModalEditData = ({ data, isModalEdit, handleOK, CanCleModalEdit, EditEmployee }) => {
@@ -27,7 +27,7 @@ const ModalEditData = ({ data, isModalEdit, handleOK, CanCleModalEdit, EditEmplo
     useEffect(() => {
         setDataEdit(data)
         form.setFieldsValue({ user: data })
-    }, [data])
+    }, [data,form])
     return (
         <>
             {dataEdit ? (

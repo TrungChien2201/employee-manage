@@ -10,19 +10,18 @@ const getdataReducer = (state = list,action) => {
             return {...state}
         }
         case ActionType.GET_DATA_SUCCESS:{
-            return {...state, lists: action.payload.map((el, index) => ({...el, key: index})),dataSearch: action.payload.map((el, index) => ({...el, key: index}))}
+            return {...state, lists: action.payload,dataSearch: action.payload}
         }  
         case ActionType.GET_DATA_ERROR:{
             return {...state}
         }     
         case ActionType.ADD_DATA:{
-            console.log(action.payload);
             return {...state}
         }
         case ActionType.ADD_DATA_SUCCESS:{
             const newList = [...state.lists];
            
-            newList.push(action.payload);
+            newList.push(action.payload)
             
             return {...state, lists: newList,dataSearch: newList}
         }
@@ -42,7 +41,6 @@ const getdataReducer = (state = list,action) => {
             return {...state}
         }
         case ActionType.EDIT_DATA_SUCCESS:{
-            console.log(action.payload);
             return {...state,lists: state.lists.map((item,index)=>{
                 if(item.id === action.payload.id){
                     return {...action.payload,key: index}

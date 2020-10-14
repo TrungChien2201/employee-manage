@@ -29,10 +29,12 @@ const MenuPage = () => {
               title={
                 <span>
                   <MailOutlined />
-                  <span>Navigation One</span>
+                  <span>Profile</span>
                 </span>
               }
             >
+              <Menu.Item key="5">Email: {user.email}</Menu.Item>
+              <Menu.Item key="6">Name: {user.name}</Menu.Item>
             </SubMenu>
             <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Navigation Two">
               <Menu.Item key="5">Option 5</Menu.Item>
